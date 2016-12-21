@@ -4,3 +4,21 @@ ackermann/main
 adress-list/main
 
 matrices/main
+
+*.pbxproj
+
+*.xcbkptlist
+
+*.xcuserstate
+
+*.plist
+
+*.xcscheme
+
+*.xcworkspacedata
+
+adress-list/adress-list/main
+
+ackermann/ackermann/main
+
+matrices/matrices/main
