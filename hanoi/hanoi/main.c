@@ -65,7 +65,11 @@ void hanoi(int n, int start, int goal, int helper)
         hanoi(n-1,start,helper,goal);
         display_cells(n, start, helper, goal);
         display[goal][findEmpty(goal)]=findLast(start);
-        
+//        printf("%d start %d", &start,n);
+//        printf("\n");
+//        printf("%d goal %d", &goal,n);
+//        printf("\n");
+
 
         //printf("move disk from %d to %d\n", start, goal);
         hanoi(n-1,helper,goal,start);

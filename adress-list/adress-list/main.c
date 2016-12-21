@@ -18,6 +18,7 @@
 #include <string.h>
 
 int max = 100;
+
 enum gender{
     male,female
 };
@@ -51,23 +52,28 @@ void inputStudent(int i){
     
     fseek(stdin,0,SEEK_END);
     
-    
     printf("\nPlease enter your gender m/f");
     gender = getchar();
     
     if (gender == 'm') {
+        printf("\nmännlich\n");
         new_person.my_gender = male;
     }else if(gender == 'f'){
+        printf("\nweiblich\n");
         new_person.my_gender = female;
+    }else{
+        new_person.my_gender = male;
     }
+    
     
     
     strcpy(new_person.first_name, vorname);
     strcpy(new_person.last_name, nachname);
-    new_person.active =1;
+    new_person.active = 1;
     students[i] = new_person;
     
-    printf("\nStudent wurde gespeichert");
+    printf("\nStudent wurde gespeichert\n");
+    fseek(stdin,0,SEEK_END);
 }
 
 int countStudents(){
@@ -81,29 +87,19 @@ int countStudents(){
     return cnt;
 }
 
-void printStudent(int i){
-    struct person printPerson = students[i];
-    printf("\nDer Student %d heißt %s %s",i,printPerson.first_name,printPerson.last_name);
+void printStudent(struct person *s,int i){
+    if (s->my_gender == male) {
+        printf("Der Student %d heißt %s %s \n", i,s->first_name,s->last_name );
+    }else{
+        printf("Die Studentin %d heißt %s %s \n", i,s->first_name,s->last_name );
+
+    }
     
 }
 
 void addStudent(){
-    int lastStudentIndex = 0;
-    for (int i=0; i<max; i++) {
-        for (int i=0; i<max; i++) {
-            if (students[i].active == 1) {
-                if (lastStudentIndex<i) {
-                    lastStudentIndex = i;
-                }
-            }
-            
-        }
-    }
-    if (lastStudentIndex < max && lastStudentIndex >0) {
-        inputStudent(lastStudentIndex+1);
-    
-    }else if(lastStudentIndex == 0){
-        inputStudent(0);
+    if (countStudents() < max ) {
+        inputStudent(countStudents());
     }else{
         printf("Arry of Students is full.");
     }
@@ -112,7 +108,7 @@ void addStudent(){
 void printAllStudents(){
     for (int i=0; i<max; i++) {
         if (students[i].active == 1) {
-            printStudent(i);
+            printStudent(&students[i],i);
         }
         
     }
@@ -137,7 +133,7 @@ int main()
         
         char action;
         action = getchar();
-        
+        fseek(stdin,0,SEEK_END);
 
         if (action == 'a') {
             addStudent();
