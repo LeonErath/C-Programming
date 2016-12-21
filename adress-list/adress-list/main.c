@@ -139,6 +139,43 @@ void printAllStudents(){
     
 }
 
+void selectStudent(){
+    int studentNumber;
+    int loop =1;
+    char action;
+    
+    while (loop) {
+        printf("\n\tYou have %d Student(s). Which do you want to select?\n",countStudents());
+        printf("\t\t=> ");
+        scanf("%d",&studentNumber);
+        fseek(stdin,0,SEEK_END);
+        
+        if (studentNumber>= 0 && studentNumber < max) {
+            if (students[studentNumber].active == 1) {
+                printf("\n"); printStudent(&students[studentNumber],studentNumber);
+                
+                printf("\n\t\e[1m Delete ?\e[0m\n");
+                printf("\t\t=> ");action = getchar();
+                fseek(stdin,0,SEEK_END);
+                if (action == 'y') {
+                    students[studentNumber].active = 0;
+                    printf("\n\tStudent is deleted.\n");
+
+                }
+                loop =0;
+                
+                
+            }else{
+                printf("\t\tThere is no Student at %d\n",studentNumber);
+            }
+            
+        }else{
+            printf("\t\tPlease enter a Number between 1 and 100\n");
+        }
+        
+    }
+}
+
 int main()
 {
 
@@ -154,7 +191,7 @@ int main()
    
 
     while (start) {
-        printf("\n1) add a Student\n2) print all Students\n3) exit the Programm\n\n");
+        printf("\n1) add a Student\n2) print all Students\n3) select Student\n4) exit the Programm\n\n");
         
         char action;
         printf("=> ");action = getchar();
@@ -164,8 +201,10 @@ int main()
             addStudent();
         }else if (action == '2') {
             printAllStudents();
-        }else if (action == '3') {
+        }else if (action == '4') {
             start = 0;
+        }else if (action == '3') {
+            selectStudent();
         }else{
             printf("\n\e[1m Eingabe ungültig.\e[0m\n");
         }
