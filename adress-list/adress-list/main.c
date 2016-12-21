@@ -17,11 +17,20 @@
 #include <stdio.h>
 #include <string.h>
 
+
 int max = 100;
 
 enum gender{
     male,female
 };
+
+struct date
+{
+    int day;
+    int month;
+    int year;
+};
+
 
 struct person
 {
@@ -29,11 +38,25 @@ struct person
     int active;
     char first_name[30];
     char last_name[30];
+    struct date birthdate;
+    struct date enrollment;
 };
 
 struct person students[100];
 
-void inputStudent(int i){
+struct date inputeDate(){
+    struct date new_date;
+    
+    fseek(stdin,0,SEEK_END);
+    
+    scanf("%d.%d.%d",&new_date.day,&new_date.month,&new_date.year);
+    
+    fseek(stdin,0,SEEK_END);
+    
+    return new_date;
+}
+
+struct person inputStudent(){
     
     char vorname[30];
     char nachname[30];
@@ -42,38 +65,44 @@ void inputStudent(int i){
 
     fseek(stdin,0,SEEK_END);
     
-    printf("\nPlease enter your first name ");
+    printf("\n\tfirst name: ");
     scanf("%[^\n]",vorname);
     
     fseek(stdin,0,SEEK_END);
     
-    printf("\nPlease enter your last name ");
+    printf("\tlast name: ");
     scanf("%[^\n]",nachname);
     
     fseek(stdin,0,SEEK_END);
     
-    printf("\nPlease enter your gender m/f");
+    printf("\tgender: ");
     gender = getchar();
     
     if (gender == 'm') {
-        printf("\nmännlich\n");
         new_person.my_gender = male;
     }else if(gender == 'f'){
-        printf("\nweiblich\n");
         new_person.my_gender = female;
     }else{
         new_person.my_gender = male;
     }
-    
-    
+
     
     strcpy(new_person.first_name, vorname);
     strcpy(new_person.last_name, nachname);
-    new_person.active = 1;
-    students[i] = new_person;
+    printf("\tbirth: ");
+    new_person.birthdate = inputeDate();
+    printf("\tenrollment: ");
+    new_person.enrollment = inputeDate();
     
-    printf("\nStudent wurde gespeichert\n");
+    
+    
+    new_person.active = 1;
+    
+    
+    printf("\n\e[1m Student wurde gespeichert.\e[0m\n");
     fseek(stdin,0,SEEK_END);
+    
+    return new_person;
 }
 
 int countStudents(){
@@ -88,18 +117,12 @@ int countStudents(){
 }
 
 void printStudent(struct person *s,int i){
-    if (s->my_gender == male) {
-        printf("Der Student %d heißt %s %s \n", i,s->first_name,s->last_name );
-    }else{
-        printf("Die Studentin %d heißt %s %s \n", i,s->first_name,s->last_name );
-
-    }
-    
+        printf("\t%d\n\t\t%s\n\t\t%s\n\t\t%d.%d.%d\n\t\t%d.%d.%d\n", i,s->first_name,s->last_name,s->birthdate.day,s->birthdate.month,s->birthdate.year,s->enrollment.day,s->enrollment.month,s->enrollment.year);
 }
 
 void addStudent(){
     if (countStudents() < max ) {
-        inputStudent(countStudents());
+        students[countStudents()] =inputStudent();
     }else{
         printf("Arry of Students is full.");
     }
@@ -118,6 +141,8 @@ void printAllStudents(){
 
 int main()
 {
+
+    
     for (int i=0; i<max; i++) {
         students[i].active = 0;
     }
@@ -126,23 +151,23 @@ int main()
     printf("****************************************************************\n\n");
     printf("Menü\n");
     
-    
+   
+
     while (start) {
-        printf("\nWhat do you want to do?\n");
-        printf("\na to add a Student\np to print all Students\ne to exit the Programm\n\n");
+        printf("\n1) add a Student\n2) print all Students\n3) exit the Programm\n\n");
         
         char action;
-        action = getchar();
+        printf("=> ");action = getchar();
         fseek(stdin,0,SEEK_END);
 
-        if (action == 'a') {
+        if (action == '1') {
             addStudent();
-        }
-        if (action == 'p') {
+        }else if (action == '2') {
             printAllStudents();
-        }
-        if (action == 'e') {
+        }else if (action == '3') {
             start = 0;
+        }else{
+            printf("\n\e[1m Eingabe ungültig.\e[0m\n");
         }
         
     }
