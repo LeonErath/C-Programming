@@ -14,11 +14,11 @@
 int width, height;  // Screen resolution
 
 // Constants for balls and their physical behavior
-#define MAX_BALLS 180
+#define MAX_BALLS 10
 #define WAIT_TIME 60
 #define RADIUS 32
 #define BALL_STYLES 16
-#define GRAVITY 0.02
+#define GRAVITY 0.2
 #define DAMPING 0.93
 #define WEIGHT_OFFSET 0.5
 #define VX 2
