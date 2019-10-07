@@ -1,22 +1,25 @@
 #include<stdio.h>
-int main(){
-	long long int fib[100000], a ,b, c;
-	fib[1]=1;
-	fib[0]=0;
-	for (long long int i = 2; i < 100000; ++i)
-	{
-		fib[i]=fib[i-1]+fib[i-2];
-		
 
+int fibonacci(int n) {
+	// Recursive bases.
+	if(n==0) {
+		return 0;
+	}else if(n==1) {
+		return 1;
 	}
 	
+	// Recursive definition of Fibonacci's Sequence.
+	else{
+		return fibonacci(n-1)+fibonacci(n-2);
+	}
+}
 
+int main(){
+	int n;
+	printf("Enter a number (n) to get the n-th Fibonacci number: ");
+	scanf("%d", &n);
 	
-			a--;
-			c=0;
-			scanf("%lld",&b);
-			c=fib[b];
-			printf("%lld\n", c);
+	printf("%d\n", fibonacci(n));
 		
 	return 0;
 }
