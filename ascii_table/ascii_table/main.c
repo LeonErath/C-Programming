@@ -1,22 +1,28 @@
-/* ascii_table.c Draw a table of all asci characters */
-/* TO DO 1: Extend the program to suppress special characters which derange the table
- TO DO 2: Find out, which ASCII character is the beep
- and (OPTIONAL...:) write a program which produces 'beep-music'
- (use large loops to produce pauses between beeps.) */
-
+/* ascii_table.c draws a table of all visible ASCII characters */
 #include <stdio.h>
 
 int main()
 {
-    int i, j;
-    char c;
-    for(i = 0; i<256; i=i+16)
+    int i, j=0;
+    
+    //show the visible elements of ASCII table
+    for(i=33; i<127; i++)
     {
-        printf("%3d ",i);
-        for(j = 0; j<16; j=j+1) {
-            c=i+j;
-            printf("%c",c);
+        if(i<100){
+            printf("%d = ", i);
+            printf("%c  | ", i);
+            j++;
         }
-        printf("\n");
+        else{
+            printf("%d = ", i);
+            printf("%c | ", i);
+            j++;
+        }
+        
+        if(j==10){
+            printf("\n");
+            j=0;
+        }
     }
+    printf("32 = %cspace%c", 40, 41);
 }
